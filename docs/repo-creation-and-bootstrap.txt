@@ -1,0 +1,38 @@
+# crea repo su GitHub (opzionale, con gh)
+gh repo create optistore --public --description "OptiStore mono-repo (Vue + Quarkus microservices)"
+cd optistore
+git init
+
+# file base
+curl -L https://www.toptal.com/developers/gitignore/api/java,maven,node,vue,linux,macos,windows \
+  -o .gitignore
+printf "root = true\n[*]\nend_of_line = lf\ninsert_final_newline = true\ncharset = utf-8\n" > .editorconfig
+echo "MIT License" > LICENSE
+
+# directory
+mkdir -p apps/frontend apps/backend/services docs/{architecture,api,manuals/{user-guide,admin-guide},adr} infra/k8s .github/{workflows,ISSUE_TEMPLATE} .devcontainer
+
+# FRONTEND (Vue 3 + Vite)
+cd apps/frontend
+npm create vite@latest . -- --template vue
+npm i
+npm i vue-router pinia axios bootstrap@5 bootstrap-vue-next
+# registra Bootstrap in main.js al volo (puoi farlo poi)
+
+# BACKEND (Quarkus microservizi)
+cd ../backend/services
+
+quarkus create app com.optistore:users-service \
+  --extension="resteasy-reactive,hibernate-orm-panache,jdbc-postgresql,smallrye-openapi,smallrye-health,oidc,micrometer" --no-code
+quarkus create app com.optistore:catalog-service \
+  --extension="resteasy-reactive,hibernate-orm-panache,jdbc-postgresql,smallrye-openapi,smallrye-health,oidc,micrometer" --no-code
+quarkus create app com.optistore:cart-service \
+  --extension="resteasy-reactive,redis-client,smallrye-openapi,smallrye-health,oidc,micrometer" --no-code
+quarkus create app com.optistore:orders-service \
+  --extension="resteasy-reactive,hibernate-orm-panache,jdbc-postgresql,smallrye-openapi,smallrye-health,oidc,micrometer" --no-code
+
+# torna root
+cd ../../../..
+
+git add .
+git commit -m "chore: scaffold OptiStore mono-repo (frontend+backend+docs+infra)"

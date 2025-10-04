@@ -1,0 +1,30 @@
+optistore/
+├─ apps/
+│  ├─ frontend/                 # Vue 3 + Router + Pinia + Axios + BootstrapVue
+│  └─ backend/
+│     └─ services/              # microservizi Quarkus (uno per cartella)
+│        ├─ users-service/
+│        ├─ catalog-service/
+│        ├─ cart-service/
+│        └─ orders-service/
+├─ docs/
+│  ├─ architecture/             # diagrammi, C4, sequence, ecc.
+│  ├─ api/                      # OpenAPI aggregato, contract, esempi payload
+│  ├─ manuals/
+│  │  ├─ user-guide/
+│  │  └─ admin-guide/
+│  └─ adr/                      # Architecture Decision Records
+├─ infra/
+│  ├─ docker-compose.yml        # stack dev: Postgres, Redis, Keycloak, servizi
+│  └─ k8s/                      # manifest per deploy (Deployment/Service/Ingress)
+├─ .github/
+│  ├─ workflows/                # CI per backend/frontend, lint, container build
+│  └─ ISSUE_TEMPLATE/           # bug_report.md, feature_request.md
+├─ .devcontainer/               # ambiente dev pronto con compose
+├─ .gitignore
+├─ .editorconfig
+├─ LICENSE
+├─ README.md
+├─ CONTRIBUTING.md
+├─ CODE_OF_CONDUCT.md
+└─ SECURITY.md
